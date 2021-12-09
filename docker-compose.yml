@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  ntp:
+    image: dclobato/ntp:latest
+    container_name: ntp
+    restart: always
+    ports:
+      - 123:123/udp
+    read_only: true
+    tmpfs:
+      - /etc/chrony:rw,mode=1750
+      - /run/chrony:rw,mode=1750
+      - /var/lib/chrony:rw,mode=1750
+    environment:
+      - NTP_SERVERS=gps.ntp.br,0.br.pool.ntp.org,1.br.pool.ntp.org,2.br.pool.ntp.org,3.br.pool.ntp.org
+      - LOG_LEVEL=0
+    cap_add:
+      - SYS_TIME
+      - SYS_NICE
